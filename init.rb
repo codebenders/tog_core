@@ -24,17 +24,20 @@ Tog::Plugins.settings :tog_core,  'sanitized.allowed_tags'       => (ActionView:
                                   'sanitized.allowed_attributes' => (ActionView::Base.sanitized_allowed_attributes.to_a + %w( name width height value src href )).join(' '),
                                   'sanitized.comments.allowed_tags' => ActionView::Base.sanitized_allowed_tags.to_a.join(' '),
                                   'sanitized.comments.allowed_attributes' => ActionView::Base.sanitized_allowed_attributes.to_a.join(' ')
-                                  
+ 
+if RAILS_ENV == "development"                                 
 Tog::Plugins.settings :tog_core,  'storage' => 'filesystem',
                                   'storage.filesystem.path' => ':rails_root/public/system/:class/:attachment/:id/:style_:basename.:extension'
 
+else
 # Comment out this lines to enable s3
-# Tog::Plugins.settings :tog_core,  'storage' => 's3',
-#                                   'storage.s3.path' => 'system/:class/:attachment/:id/:style_:basename.:extension',
-#                                   'storage.s3.url' => ":s3_domain_url",
-#                                   'storage.s3.bucket' => 'tog',
-#                                   'storage.s3.access_key_id' => 'YOUR_KEY_HERE',
-#                                   'storage.s3.secret_access_key' => 'YOUR_KEY_HERE'
+Tog::Plugins.settings :tog_core,  'storage' => 's3',
+                                  'storage.s3.path' => 'system/:class/:attachment/:id/:style_:basename.:extension',
+                                  'storage.s3.url' => ":s3_domain_url",
+                                  'storage.s3.bucket' => "unitenow_#{RAILS_ENV}",
+                                  'storage.s3.access_key_id' => 'AKIAIAIPVCYYWFO7OPZA',
+                                  'storage.s3.secret_access_key' => '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'
+end
 
 
 
